@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Subscription API
+  version: 1.0.0
+servers:
+- url: /
+security:
+- bearerAuth: []
+tags:
+- name: subscriptions
+paths:
+  /api/user/{userId}/subscriptions:
+    get:
+      operationId: time
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: Subcription
+      summary: Returns user subscription
+      tags:
+      - subscriptions
+      x-accepts: application/json
+      x-tags:
+      - tag: subscriptions
+    post:
+      operationId: create subsription
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: Tasks list
+      summary: Creates user subcription
+      tags:
+      - subscriptions
+      x-accepts: application/json
+      x-tags:
+      - tag: subscriptions
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    ForbiddenError:
+      description: Resource is forbidden
+    NotFoundError:
+      description: Resource not found
+  schemas:
+    Subscription:
+      example:
+        userId: google-oauth2|107572411600055728921
+        startDateTime: 2000-01-23T04:56:07.000+00:00
+        endDateTime: 2000-01-23T04:56:07.000+00:00
+      properties:
+        userId:
+          type: string
+        startDateTime:
+          format: date-time
+          type: string
+        endDateTime:
+          format: date-time
+          type: string
+      required:
+      - userId
+      - endDateTime
+      - startDateTime
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
