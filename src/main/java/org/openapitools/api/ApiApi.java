@@ -51,7 +51,7 @@ public interface ApiApi {
 					@SecurityRequirement(name = "bearerAuth")
 			}
 	)
-	@PostMapping
+	@PostMapping(path = "/api/user/{userId}/subscriptions")
 	default ResponseEntity<SubscriptionDTO> createSubscription(
 			@Parameter(name = "userId", required = true, in = ParameterIn.PATH) @PathVariable("userId") String userId,
 			@Parameter(name = "SubscriptionDTO", required = true) @Valid @RequestBody SubscriptionDTO subscriptionDTO) {
@@ -87,7 +87,7 @@ public interface ApiApi {
 					@SecurityRequirement(name = "bearerAuth")
 			}
 	)
-	@GetMapping
+	@GetMapping(path = "/api/user/{userId}/subscriptions")
 	default ResponseEntity<SubscriptionDTO> getSubscription(
 			@Parameter(name = "userId", required = true, in = ParameterIn.PATH) @PathVariable("userId") String userId) throws ApiException {
 		getRequest().ifPresent(request -> {
